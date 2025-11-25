@@ -1,4 +1,4 @@
-package com.example.examplemod.util;
+package dev.weexnes.esp.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

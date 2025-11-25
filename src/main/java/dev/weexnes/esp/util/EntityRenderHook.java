@@ -1,4 +1,4 @@
-package com.example.examplemod.util;
+package dev.weexnes.esp.util;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;

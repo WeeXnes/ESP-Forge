@@ -1,8 +1,8 @@
 [
 {
-  "modid": "testmod",
-  "name": "WeeXnes' Test Mod",
-  "description": "A 1.8.9 Forge Test Mod",
+  "modid": "sneaky",
+  "name": "WeeXnes' ESP Mod",
+  "description": "A 1.8.9 Forge ESP Mod",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
