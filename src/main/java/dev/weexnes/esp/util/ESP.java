@@ -11,6 +11,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import dev.weexnes.esp.KeyInputHandler; // Import the KeyInputHandler
 
 public class ESP {
 
@@ -18,7 +19,7 @@ public class ESP {
 
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
-        if (mc.getRenderManager() == null || mc.theWorld == null) {
+        if (!KeyInputHandler.espEnabled || mc.getRenderManager() == null || mc.theWorld == null) {
             return;
         }
         for (Entity entity : mc.theWorld.loadedEntityList) {
