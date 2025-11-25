@@ -9,14 +9,14 @@ public class EntityRenderHook {
 
     @SubscribeEvent
     public void onRenderLivingPre(RenderLivingEvent.Pre event) {
-        if (KeyInputHandler.wallhackEnabled && !(event.entity instanceof net.minecraft.entity.player.EntityPlayer)) {
+        if (KeyInputHandler.wallhackEnabled) {
             GlStateManager.disableDepth();
         }
     }
 
     @SubscribeEvent
     public void onRenderLivingPost(RenderLivingEvent.Post event) {
-        if (KeyInputHandler.wallhackEnabled && !(event.entity instanceof net.minecraft.entity.player.EntityPlayer)) {
+        if (KeyInputHandler.wallhackEnabled) {
             GlStateManager.enableDepth();
         }
     }
