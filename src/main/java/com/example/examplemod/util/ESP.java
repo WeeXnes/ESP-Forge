@@ -57,8 +57,8 @@ public class ESP {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 
-        // Set color to red
-        GlStateManager.color(1.0f, 0.0f, 0.0f, 0.5f);
+        // Set color to blue
+        GlStateManager.color(0.0f, 0.0f, 1.0f, 0.3f);
 
         // Draw the box
         worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);

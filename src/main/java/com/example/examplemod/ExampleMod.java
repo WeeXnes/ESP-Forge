@@ -17,6 +17,7 @@ public class ExampleMod
     public void init(FMLInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(new ESP());
+        MinecraftForge.EVENT_BUS.register(new com.example.examplemod.util.EntityRenderHook());
 		// some example code
         System.out.println("DIRT BLOCK >> "+Blocks.dirt.getUnlocalizedName());
     }
