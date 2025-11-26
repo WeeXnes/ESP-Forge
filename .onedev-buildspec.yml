@@ -1,0 +1,52 @@
+version: 40
+jobs:
+- name: gradle ci
+  jobExecutor: builder
+  steps:
+  - !CheckoutStep
+    name: checkout code
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: SUCCESSFUL
+    optional: false
+  - !CommandStep
+    name: gradle init
+    runInContainer: false
+    interpreter: !DefaultInterpreter
+      commands: |
+        gradle init
+    useTTY: true
+    condition: SUCCESSFUL
+    optional: false
+  - !CommandStep
+    name: gradle setupCiWorkspace
+    runInContainer: false
+    interpreter: !DefaultInterpreter
+      commands: |
+        gradle setupCiWorkspace
+    useTTY: true
+    condition: SUCCESSFUL
+    optional: false
+  - !CommandStep
+    name: gradle build
+    runInContainer: false
+    interpreter: !DefaultInterpreter
+      commands: |
+        gradle build
+    useTTY: true
+    condition: SUCCESSFUL
+    optional: false
+  - !PublishArtifactStep
+    name: Publish Jars
+    sourcePath: build/libs
+    artifacts: '*'
+    condition: SUCCESSFUL
+    optional: false
+  triggers:
+  - !BranchUpdateTrigger {}
+  - !PullRequestUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 14400
