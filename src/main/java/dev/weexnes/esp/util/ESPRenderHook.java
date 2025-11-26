@@ -1,16 +1,18 @@
 package dev.weexnes.esp.util;
 
+import dev.weexnes.esp.KeyInputHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
-import dev.weexnes.esp.KeyInputHandler; // Import the KeyInputHandler
 
 public class ESPRenderHook {
 
@@ -43,27 +45,36 @@ public class ESPRenderHook {
                 entityBox.maxZ - entity.posZ + z
         );
 
-        drawESPBox(renderBox, entity.isInvisible());
+        drawESPBox(renderBox, entity);
     }
 
-    private void drawESPBox(AxisAlignedBB box, boolean isInvisible) {
+    private void drawESPBox(AxisAlignedBB box, Entity entity) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.disableDepth();
         GlStateManager.disableTexture2D();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glLineWidth(2.0F);
 
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 
-
-        if (isInvisible) {
+        if (entity instanceof EntityPlayer && entity.isInvisible()) {
             GL11.glLineWidth(5.0F);
-            GlStateManager.color(1.0f, 0.0f, 0.0f, 0.7f);   // ROT
+            GlStateManager.color(1.0f, 0.0f, 1.0f, 0.7f); // Pink
+        } else if (entity instanceof EntityLivingBase) {
+            GL11.glLineWidth(2.0F);
+            EntityLivingBase livingBase = (EntityLivingBase) entity;
+            float health = livingBase.getHealth();
+            float maxHealth = livingBase.getMaxHealth();
+            float healthPercent = health / maxHealth;
+
+            float red = 1.0f - healthPercent;
+            float green = healthPercent;
+
+            GlStateManager.color(red, green, 0.0f, 0.5f);
         } else {
             GL11.glLineWidth(2.0F);
-            GlStateManager.color(0.0f, 0.0f, 1.0f, 0.3f);   // Standard BLAU
+            GlStateManager.color(0.0f, 0.0f, 1.0f, 0.3f);   // Standard BLAU for non-living entities
         }
 
         // Draw the box
