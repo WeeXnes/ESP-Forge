@@ -43,10 +43,10 @@ public class ESPRenderHook {
                 entityBox.maxZ - entity.posZ + z
         );
 
-        drawESPBox(renderBox);
+        drawESPBox(renderBox, entity.isInvisible());
     }
 
-    private void drawESPBox(AxisAlignedBB box) {
+    private void drawESPBox(AxisAlignedBB box, boolean isInvisible) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.disableDepth();
@@ -57,8 +57,14 @@ public class ESPRenderHook {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 
-        // Set color to blue
-        GlStateManager.color(0.0f, 0.0f, 1.0f, 0.3f);
+
+        if (isInvisible) {
+            GL11.glLineWidth(5.0F);
+            GlStateManager.color(1.0f, 0.0f, 0.0f, 0.7f);   // ROT
+        } else {
+            GL11.glLineWidth(2.0F);
+            GlStateManager.color(0.0f, 0.0f, 1.0f, 0.3f);   // Standard BLAU
+        }
 
         // Draw the box
         worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
