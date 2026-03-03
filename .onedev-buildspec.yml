@@ -16,7 +16,7 @@ jobs:
     interpreter:
       type: DefaultInterpreter
       commands: |
-        gradle init
+        gradle-4.9 init
     useTTY: true
     condition: SUCCESSFUL
     optional: false
@@ -26,7 +26,7 @@ jobs:
     interpreter:
       type: DefaultInterpreter
       commands: |
-        gradle setupCiWorkspace
+        gradle-4.9 setupCiWorkspace
     useTTY: true
     condition: SUCCESSFUL
     optional: false
@@ -36,7 +36,7 @@ jobs:
     interpreter:
       type: DefaultInterpreter
       commands: |
-        gradle build
+        gradle-4.9 build
     useTTY: true
     condition: SUCCESSFUL
     optional: false
