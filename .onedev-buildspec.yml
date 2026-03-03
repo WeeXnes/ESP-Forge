@@ -1,51 +1,56 @@
-version: 40
+version: 43
 jobs:
 - name: gradle ci
-  jobExecutor: builder
   steps:
-  - !CheckoutStep
+  - type: CheckoutStep
     name: checkout code
-    cloneCredential: !DefaultCredential {}
+    cloneCredential:
+      type: DefaultCredential
     withLfs: false
     withSubmodules: false
     condition: SUCCESSFUL
     optional: false
-  - !CommandStep
+  - type: CommandStep
     name: gradle init
     runInContainer: false
-    interpreter: !DefaultInterpreter
+    interpreter:
+      type: DefaultInterpreter
       commands: |
         gradle init
     useTTY: true
     condition: SUCCESSFUL
     optional: false
-  - !CommandStep
+  - type: CommandStep
     name: gradle setupCiWorkspace
     runInContainer: false
-    interpreter: !DefaultInterpreter
+    interpreter:
+      type: DefaultInterpreter
       commands: |
         gradle setupCiWorkspace
     useTTY: true
     condition: SUCCESSFUL
     optional: false
-  - !CommandStep
+  - type: CommandStep
     name: gradle build
     runInContainer: false
-    interpreter: !DefaultInterpreter
+    interpreter:
+      type: DefaultInterpreter
       commands: |
         gradle build
     useTTY: true
     condition: SUCCESSFUL
     optional: false
-  - !PublishArtifactStep
+  - type: PublishArtifactStep
     name: Publish Jars
     sourcePath: build/libs
     artifacts: '*'
     condition: SUCCESSFUL
     optional: false
+  jobExecutor: Builder
   triggers:
-  - !BranchUpdateTrigger {}
-  - !PullRequestUpdateTrigger {}
+  - type: BranchUpdateTrigger
+    userMatch: anyone
+  - type: PullRequestUpdateTrigger
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
