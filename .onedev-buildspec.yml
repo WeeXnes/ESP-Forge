@@ -1,6 +1,8 @@
-version: 43
+version: 59
 jobs:
 - name: gradle ci
+  executeInSandbox: false
+  jobExecutor: Builder
   steps:
   - type: CheckoutStep
     name: checkout code
@@ -14,9 +16,11 @@ jobs:
     name: gradle init
     runInContainer: false
     interpreter:
-      type: DefaultInterpreter
+      type: PosixInterpreter
+      shell: sh
       commands: |
         gradle-4.9 init
+    runAs: 0:0
     useTTY: true
     condition: SUCCESSFUL
     optional: false
@@ -24,9 +28,11 @@ jobs:
     name: gradle setupCiWorkspace
     runInContainer: false
     interpreter:
-      type: DefaultInterpreter
+      type: PosixInterpreter
+      shell: sh
       commands: |
         gradle-4.9 setupCiWorkspace
+    runAs: 0:0
     useTTY: true
     condition: SUCCESSFUL
     optional: false
@@ -34,9 +40,11 @@ jobs:
     name: gradle build
     runInContainer: false
     interpreter:
-      type: DefaultInterpreter
+      type: PosixInterpreter
+      shell: sh
       commands: |
         gradle-4.9 build
+    runAs: 0:0
     useTTY: true
     condition: SUCCESSFUL
     optional: false
@@ -46,12 +54,35 @@ jobs:
     artifacts: '*'
     condition: SUCCESSFUL
     optional: false
-  jobExecutor: Builder
   triggers:
   - type: BranchUpdateTrigger
     userMatch: anyone
   - type: PullRequestUpdateTrigger
   retryCondition: never
-  maxRetries: 3
+  maxAttempts: 4
   retryDelay: 30
+  includeUpstreamWhenRebuild: false
+  includeDownstreamWhenRebuild: false
   timeout: 14400
+- name: Mirror to GitHub
+  executeInSandbox: false
+  jobExecutor: Builder
+  steps:
+  - type: PushRepository
+    name: push to github.com/WeeXnes/ESP-Forge
+    remoteUrl: https://github.com/WeeXnes/ESP-Forge.git
+    userName: WeeXnes
+    passwordSecret: github-mirror-token
+    force: false
+    condition: SUCCESSFUL
+    optional: false
+  triggers:
+  - type: BranchUpdateTrigger
+    userMatch: anyone
+  - type: TagCreateTrigger
+  retryCondition: never
+  maxAttempts: 4
+  retryDelay: 30
+  includeUpstreamWhenRebuild: false
+  includeDownstreamWhenRebuild: false
+  timeout: 3600
