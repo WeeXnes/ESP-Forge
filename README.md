@@ -1,49 +1,55 @@
-# Forge 1.8.9 Mod Template
+# ESP-Forge
 
-This repository serves as a ready-to-use template for developing mods for Minecraft Forge 1.8.9. It comes pre-configured with Gradle 4.9, allowing you to jump straight into development.
+ESP mod for Minecraft Forge 1.8.9, built on a ready-to-use Forge 1.8.9 mod template.
 
-## Getting Started
+[![Platform](https://img.shields.io/badge/platform-Forge%201.8.9-000000?style=flat-square&labelColor=1f1f1f)](#build-from-source)
+[![Stack](https://img.shields.io/badge/stack-Java%20%C2%B7%20Gradle%204.9-000000?style=flat-square&labelColor=1f1f1f)](#build-from-source)
 
-Follow these steps to set up your development environment and run the mod:
+The repository works as a template for developing Forge 1.8.9 mods. It comes pre-configured with Gradle 4.9, so you can
+jump straight into development.
 
-1.  **Setup Decomp Workspace**:
-    Before you can start coding or running the client, you need to set up the ForgeGradle development environment. This task downloads and decompiles Minecraft, making it ready for mod development.
+## Build from source
 
-    ```bash
-    ./gradlew setupDecompWorkspace
-    ```
+1. **Set up the decompiled workspace.** Before you can start coding or running the client, set up the ForgeGradle
+   development environment. This task downloads and decompiles Minecraft, making it ready for mod development.
 
-2.  **Run Client**:
-    Once the decompiled workspace is set up, you can run a Minecraft client with your mod loaded. This is useful for testing your changes directly.
+   ```bash
+   ./gradlew setupDecompWorkspace
+   ```
 
-    ```bash
-    ./gradlew runClient
-    ```
+2. **Run the client.** Once the decompiled workspace is set up, you can run a Minecraft client with your mod loaded.
+   This is useful for testing your changes directly.
 
-3.  **Build Mod JAR**:
-    When you're ready to package your mod for distribution, use the `jar` task to build the mod's `.jar` file. This file will be located in the `build/libs` directory.
+   ```bash
+   ./gradlew runClient
+   ```
 
-    ```bash
-    ./gradlew jar
-    ```
+3. **Build the mod JAR.** When you're ready to package your mod for distribution, use the `jar` task to build the mod's
+   `.jar` file. It is placed in `build/libs`.
+
+   ```bash
+   ./gradlew jar
+   ```
 
 Happy modding!
 
-## Troubleshooting
+### Troubleshooting
 
-If you encounter issues with the setup or running the client, try these steps:
+If you run into issues with the setup or running the client, try these steps:
 
-1.  **Clean Build**:
-    Sometimes, old build artifacts can cause problems. Cleaning the build directory can resolve these.
+1. **Clean build:** old build artifacts can cause problems. Cleaning the build directory can resolve these.
 
-    ```bash
-    ./gradlew clean
-    ```
+   ```bash
+   ./gradlew clean
+   ```
 
-2.  **Clean ForgeGradle Cache**:
-    If issues persist, especially after updating ForgeGradle or dependencies, clearing its cache can help.
+2. **Clean the ForgeGradle cache:** if issues persist, especially after updating ForgeGradle or dependencies, clearing
+   its cache can help.
 
-    ```bash
-    ./gradlew cleanCache
-    ```
+   ```bash
+   ./gradlew cleanCache
+   ```
 
+## License
+
+No license has been chosen for the mod yet. Forge Mod Loader's own terms are in [LICENSE-fml.txt](LICENSE-fml.txt).
